@@ -9,4 +9,4 @@ if jokerequest.status_code == 200:
     else:
         print(joke["joke"])
 else:
-    print("erreur au niveau de l'API, pas de blague :-(")
+    print("erreur au niveau de l'API, pas de blague :-(\n")
