@@ -41,15 +41,18 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@master
+      - name: Build an image from Dockerfile
+        run: docker build -t app.py
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: 'Dockerfile'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+              image-ref: 'app.py'
+              format: 'table'
+              exit-code: '1'
+              ignore-unfixed: true
+              vuln-type: 'os,library'
+              severity: 'CRITICAL,HIGH'
 
       - name: Push Docker image
         id: push
